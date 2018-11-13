@@ -10,8 +10,14 @@ import java.util.*
 
 private val TAG = "storage"
 
+/**
+ * Save a note as a file on phone
+ * @var Context context The context
+ * @var Note note The note to save
+ */
 fun persistNote(context: Context, note: Note) {
 
+    // Generate an unique id
     if (TextUtils.isEmpty(note.filename)) {
         note.filename = UUID.randomUUID().toString() + ".note"
     }
@@ -20,11 +26,17 @@ fun persistNote(context: Context, note: Note) {
     val fileOutput = context.openFileOutput(note.filename, Context.MODE_PRIVATE)
     val outputStream = ObjectOutputStream(fileOutput)
 
-    // possible to do this, see implementation Serializable in class Note
+    // Note implement the Serializable
     outputStream.writeObject(note)
     outputStream.close()
 }
 
+/**
+ * Load the Notes application
+ * @var Context context The context
+ *
+ * @return notes
+ */
 fun loadNotes(context: Context): MutableList<Note> {
     val notes = mutableListOf<Note>()
 
@@ -38,6 +50,13 @@ fun loadNotes(context: Context): MutableList<Note> {
     return notes
 }
 
+/**
+ * Load the note given in parameter
+ * @var Context context The context
+ * @var String filename The note filename to load
+ *
+ * @return note
+ */
 private fun loadNote(context: Context, filename: String): Note {
     val fileinput = context.openFileInput(filename)
     val inputStream = ObjectInputStream(fileinput)
@@ -47,6 +66,11 @@ private fun loadNote(context: Context, filename: String): Note {
     return note
 }
 
+/**
+ * Delete the note given in parameter
+ * @var Context context The context
+ * @var Note note The note to delete
+ */
 fun deleteNote(context: Context, note: Note) {
     context.deleteFile(note.filename)
 }

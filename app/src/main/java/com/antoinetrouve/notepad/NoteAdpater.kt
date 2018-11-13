@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
+/**
+ * Adapte a Note list for RecyclerView
+ */
 class NoteAdpater (val notes: List<Note>, val itemClickListener: View.OnClickListener)
     : RecyclerView.Adapter<NoteAdpater.ViewHolder>() {
 
